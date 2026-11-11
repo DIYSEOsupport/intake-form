@@ -3,85 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DIYSEO Intake Form</title>
+<title>New Website Intake Form</title>
 <style>
-  :root { --bg:#f6efd9; --surface:#fffaf0; --ink:#1c2d3d; --muted:#536474; --line:#dfd4b9; --blue:#385873; --orange:#df793d; }
-  body { background:var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; margin:0; padding:24px 16px; }
+  :root { --bg:#f6efd9; --surface:#fffaf0; --ink:#1c2d3d; --muted:#536474; --line:#dfd4b9; --blue:#446386; --orange:#dc763a; }
+  /* staggered dot texture, like the Gumroad product page, in logo blue #446386 */
+  body { background:radial-gradient(rgba(56,88,115,.16) 1px, transparent 1.5px) 0 0/56px 56px, radial-gradient(rgba(56,88,115,.16) 1px, transparent 1.5px) 28px 28px/56px 56px, var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; margin:0; padding:24px 16px; }
   main { max-width:680px; margin:0 auto; }
+  /* slogan, same as the homepage hero (gumroad/homepage) */
+  /* header: logo with the slogan close on its right, centered together; stacked on phones */
+  .hero { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px 20px; margin:8px 0 24px; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .hero img { width:346px; max-width:100%; border-radius:0; } /* form-header-logo.*: cropped from form-header.*, cream made transparent so the page dots show */
+  .slogan { font-size:clamp(1.9rem,6vw,2.7rem); font-weight:800; letter-spacing:-.035em; line-height:1.1; color:var(--blue); }
+  .slogan .orange { color:var(--orange); } .slogan .blue { color:var(--blue); }
   img { width:100%; border-radius:8px 8px 0 0; display:block; }
   .card { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:20px 24px; margin-bottom:12px; }
-  .intro { border-top:8px solid var(--blue); border-radius:0 0 8px 8px; }
-  h1 { margin:0 0 8px; font-size:28px; }
+  .intro { border-top:8px solid var(--blue); border-radius:0 0 8px 8px; text-align:center; }
+  h1 { margin:0 0 8px; font-size:28px; color:var(--blue); }
   .desc { color:var(--muted); white-space:pre-line; }
   .q { font-weight:600; margin-bottom:12px; }
-  .ex { color:var(--muted); font-size:13px; margin:-8px 0 12px; }
-  .q::after { content:" *"; color:#d93025; }
+  .ex { color:var(--muted); font-size:13px; margin:-7px 0 12px; }
+  .q::after { content:" *"; color:var(--orange); }
+  .q.section:not(.req)::after, .q.optional::after { content:none; } /* section boxes (Business info) are all required lines: star on the title */
+  #qs .card > .q { font-size:20px; color:var(--blue); } /* every question title looks like a header */
+  .card .body { max-height:0; overflow:hidden; font-family:Georgia,"Times New Roman",serif; } /* inside each card: Georgia; titles keep the system font */
+  .card.open .body { max-height:none; overflow:visible; }
+  #qs .card > .q { cursor:pointer; margin:0; }
+  #qs .card > .body > .ex:first-child { margin-top:5px; } /* card title has no bottom margin: same 5px gap as questions inside a box */
+  #qs .card.open > .q { margin-bottom:12px; }
+  /* static cog before each title: blue when closed */
+  #qs .card > .q::before { content:""; display:inline-block; width:18px; height:18px; margin-right:8px; vertical-align:-2px; background:var(--blue);
+    -webkit-mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.130.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.620-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/></svg>") center/contain no-repeat;
+            mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.130.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.620-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/></svg>") center/contain no-repeat; }
+  /* open: orange cog with the logo's arrow through it, sliding up-right along its own angle */
+  #qs .card.open > .q::before { width:20px; height:20px; margin:0 7px 0 -1px; vertical-align:-3px; -webkit-mask:none; mask:none;
+    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-1.33 -1.33 26.66 26.66'><path fill='%23dc763a' d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.130.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.620-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/><clipPath id='c'><circle cx='12' cy='12' r='10'/></clipPath><g clip-path='url(%23c)'><g fill='%23446386'><path d='M2.7 21.4L9.8 12.3L12.2 14.6L16.9 8.1L15.4 6.9L23 1.5L20.2 10.5L18.7 9.3L12.6 17.4L10.2 15Z'/><animateTransform attributeName='transform' type='translate' values='-17.1 19.7;12.2 -20.8' dur='1.3s' repeatCount='indefinite'/></g></g></svg>") center/contain no-repeat; }
+  .sub { margin-top:16px; }
+  .explain { margin-top:12px; padding-left:12px; border-left:3px solid var(--orange); }
+  .explain textarea { margin:4px 0 6px; } .q.sub { font-weight:600; }
+  /* box lines: label left, line right; label on top on phones */
+  label.field { display:grid; grid-template-columns:170px 1fr; gap:8px; align-items:end; margin:6px 0; }
+  .field > span { font-weight:600; display:flex; align-items:center; gap:6px; }
+  .field > span svg { width:22px; height:22px; flex:none; color:var(--blue); overflow:visible; }
+  .live { display:block; font-size:13px; margin-top:2px; }
+  input.line { margin-bottom:10px; }
+  .ex.note { margin:4px 0 0; }
   textarea { width:100%; box-sizing:border-box; border:0; border-bottom:1px solid var(--line); background:transparent; font:inherit; resize:vertical; }
-  textarea, input[type=email] { width:100%; box-sizing:border-box; border:0; border-bottom:1px solid var(--line); background:transparent; font:inherit; }
-  textarea:focus, input[type=email]:focus { outline:none; border-bottom:2px solid var(--blue); }
-  label { display:block; margin:8px 0; }
-  input[type=radio] { accent-color:var(--blue); }
+  textarea, input[type=email], input[type=text] { width:100%; box-sizing:border-box; border:0; border-bottom:1px solid var(--line); background:transparent; font:inherit; }
+  textarea:focus, input[type=email]:focus, input[type=text]:focus { outline:none; border-bottom:2px solid var(--blue); }
+  label { display:flex; align-items:center; gap:8px; margin:0; }
+  .opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:4px 12px; }
+  .opts.list { grid-template-columns:1fr; } /* under 5 choices: one per line */
+  /* radios and checkboxes look the same: circles only */
+  input[type=radio], input[type=checkbox] { appearance:none; flex:none; width:18px; height:18px; margin:0; border:2px solid var(--blue); border-radius:50%; cursor:pointer; }
+  input[type=radio]:checked, input[type=checkbox]:checked { background:var(--blue); box-shadow:inset 0 0 0 3px var(--surface); }
+  label:has(input:disabled) { opacity:.45; cursor:not-allowed; }
+  input.other { flex:1; min-width:0; }
+  label.upload { flex-wrap:wrap; margin-top:8px; font-weight:600; }
+  ul.files { margin:6px 0 0; padding-left:20px; font-size:14px; }
+  ul.files button { all:unset; cursor:pointer; margin-left:8px; color:var(--orange); font-weight:700; }
   a { color:var(--blue); text-decoration-color:var(--orange); transition:color .2s; }
   a:hover { color:var(--orange); }
-  .contact { text-align:right; }
-  .end-logo { text-align:right; }
+  .end-logo { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:20px 0 16px; padding:22px 24px; background:#446386; border-radius:8px; } /* logo blue, same as "No tech skills." */
+  /* footer signature: serif name, small-caps labels, dark text so it reads on paper */
+  .contact-links { text-align:left; padding-left:14px; border-left:3px solid #ff9b5d; }
+  .sig-name { display:inline-block; white-space:nowrap; font-family:Georgia,"Times New Roman",serif; font-size:24px; font-weight:700; color:#f7f0df; line-height:1.3; }
+  .sig-role { display:block; white-space:nowrap; font-size:13px; font-weight:600; text-transform:uppercase; color:#c2cfda; margin:6px 0 18px; }
+  .contact-links dl { display:grid; grid-template-columns:auto 1fr; gap:12px 14px; line-height:1.5; margin:0; font-size:16px; }
+  .contact-links dt { font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#c2cfda; align-self:center; }
+  .contact-links dd { margin:0; }
+  .contact-links a { font-family:Georgia,"Times New Roman",serif; font-size:17px; letter-spacing:.09em; color:#ff9b5d; font-weight:700; text-decoration:underline 2px #c2cfda; text-underline-offset:6px; font-variant-numeric:lining-nums tabular-nums; } /* spacing + low underline keep the dots in 941.500.3707 and .com clear */
+  .contact-links a:hover { color:#f7f0df; }
   .end-logo img { width:120px; border-radius:50%; display:inline-block; }
 
-  /* motion + brand glows (blue = 56,88,115 · orange = 223,121,61) */
+  /* motion + brand glows (blue = 68,99,134 · orange = 220,118,58) */
   .card, button, label, img, textarea { transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease; }
-  main > img:first-child:hover { box-shadow:0 0 18px rgba(56,88,115,.25); }
-  .card:hover { transform:translateY(-2px); border-color:var(--blue); box-shadow:0 6px 20px rgba(56,88,115,.18); }
-  .card:focus-within { border-color:var(--orange); box-shadow:0 0 0 2px rgba(223,121,61,.35), 0 0 22px rgba(223,121,61,.25); }
+  main > img:first-child:hover { box-shadow:0 0 18px rgba(68,99,134,.25); }
+  .card:hover { transform:translateY(-2px); border-color:var(--blue); box-shadow:0 6px 20px rgba(68,99,134,.18); }
+  .card:focus-within { border-color:var(--orange); box-shadow:0 0 0 2px rgba(220,118,58,.35), 0 0 22px rgba(220,118,58,.25); }
   label { padding:4px 8px; border-radius:4px; cursor:pointer; }
-  label:hover { background:rgba(56,88,115,.08); }
+  label:hover { background:rgba(68,99,134,.08); }
   button { cursor:pointer; }
-  button:hover { transform:translateY(-1px); box-shadow:0 0 0 3px rgba(223,121,61,.3), 0 0 20px rgba(223,121,61,.45); }
+  button:hover { transform:translateY(-1px); box-shadow:0 0 0 3px rgba(220,118,58,.3), 0 0 20px rgba(220,118,58,.45); }
   button:active { transform:scale(.97); }
-  .end-logo img:hover { transform:scale(1.06); box-shadow:0 0 22px rgba(56,88,115,.4); }
+  .end-logo img:hover { transform:scale(1.06); box-shadow:0 0 22px rgba(68,99,134,.4); }
   #qs .card, .intro { animation:rise .4s ease both; }
   @keyframes rise { from { opacity:0; transform:translateY(8px); } }
   @media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } }
   .print-only { display:none !important; }
-  @media print { .print-only { display:block !important; } .end-logo .print-only { display:inline-block !important; } .screen-only { display:none !important; } }
-  button { background:var(--blue); color:var(--surface); border:0; padding:10px 24px; border-radius:4px; font-weight:600; }
+  @media print { .print-only { display:block !important; } .end-logo .print-only { display:inline-block !important; } .screen-only { display:none !important; }
+    .end-logo { break-inside:avoid; background:none; border:2px solid var(--blue); } /* no dark ink block on paper */
+    .sig-name { font-size:18pt; color:var(--blue); } .contact-links dl { font-size:12pt; } .sig-role, .contact-links dt { font-size:10pt; color:#000; }
+    .contact-links a { color:#000; text-decoration-color:var(--blue); } .contact-links { border-left-color:var(--orange); } }
+  button { background:var(--blue); color:var(--surface); border:0; padding:10px 24px; border-radius:4px; font-weight:600; display:block; margin:0 auto; }
+  @media (max-width:600px) {
+    body { padding:12px 8px; }
+    .card { padding:16px; }
+    h1 { font-size:22px; }
+    label { min-height:44px; }
+    label.field { grid-template-columns:1fr; gap:2px; }
+    button { width:100%; padding:14px; }
+    .hero { justify-content:center; } /* stacked on phones: keep centered */
+    .end-logo img { width:84px; }
+    .sig-name { font-size:20px; }
+  }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 <main>
-  <img class="screen-only" src="form-header.gif" alt="DIYSEO"><img class="print-only" src="form-header.png" alt="DIYSEO">
+  <div class="hero"><img class="screen-only" src="form-header-logo.gif?v=11" alt="DIYSEO"><img class="print-only" src="form-header-logo.png?v=11" alt="DIYSEO">
+    <div class="slogan"><span class="orange">No budget.</span><br><span class="blue">No tech skills.</span><br>No problem.</div></div>
   <div class="card intro"><h1 id="title"></h1><div class="desc" id="desc"></div></div>
   <form id="f">
-  <div class="card"><div class="q">Your email</div><input type="email" name="emailAddress" required></div>
   <div id="qs"></div>
   <!-- animated on screen, static (arrow pointing right way) when printed -->
-  <div class="end-logo"><img class="screen-only" src="logo-small.gif" alt="DIYSEO"><img class="print-only" src="logo-small.png" alt="DIYSEO"></div>
+  <div class="end-logo">
+    <div class="contact-links">
+      <div class="sig-name">Diana M. Leff</div>
+      <div class="sig-role">Owner / Operator · DIYSEO</div>
+      <dl><dt>Call/Text</dt><dd><a href="tel:+19415003707">941.500.3707</a></dd><dt>Email</dt><dd><a href="mailto:DIYSEO.support@gmail.com">DIYSEO.support@gmail.com</a></dd></dl>
+    </div>
+    <div><img class="screen-only" src="logo-small.gif?v=11" alt="DIYSEO"><img class="print-only" src="logo-small.png?v=11" alt="DIYSEO"></div>
+  </div>
   <button>Submit</button>
   </form>
 </main>
 <script>
+// both logos spin at the same speed (60 frames x 40ms) but each starts when it loads; restart them together
+addEventListener('load', () => {
+  const imgs = [...document.querySelectorAll('img[src$=".gif"]')];
+  Promise.all(imgs.map(i => fetch(i.src).then(r => r.blob()).then(b => URL.createObjectURL(b))))
+    .then(urls => imgs.forEach((i, k) => i.src = urls[k])).catch(() => {});
+});
 // Renders the questions straight from create-form.gs, so this preview never drifts from the real form.
 // shortcut: regex-parses the script's own simple call style; breaks if questions use other FormApp calls.
+// shows what they typed as a clickable link under the line (textContent/href only, so typing can't inject HTML)
+function livelink(input, kind) {
+  const a = document.createElement('a'); a.className = 'live'; a.hidden = true; input.after(a);
+  input.addEventListener('input', () => {
+    const v = input.value.trim(), digits = v.replace(/\D/g, '');
+    const href = kind === 'tel' ? digits.length >= 10 && 'tel:+' + (digits.length === 10 ? '1' : '') + digits
+      : kind === 'mailto' ? /\S+@\S+\.\S+/.test(v) && 'mailto:' + v
+      : /\S+\.\S+/.test(v) && (/^https?:\/\//i.test(v) ? v : 'https://' + v);
+    a.hidden = !href;
+    if (href) { a.href = href; a.textContent = v; if (kind === 'url') { a.target = '_blank'; a.rel = 'noopener'; } }
+  });
+}
+// social icons, shown left of the label, in each brand's own colors (Other stays brand blue)
+const TT = '<path d="M16 3c.3 2 1.6 3.4 3.5 3.6v2.6c-1.3 0-2.5-.4-3.5-1.1v6.4A5 5 0 1 1 11 9.6v2.7a2.4 2.4 0 1 0 2.4 2.4V3z"';
+const ICONS = {
+  'Google Business Profile link': '<path fill="#ea4335" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff"/>',
+  Facebook: '<rect x="3" y="3" width="18" height="18" rx="4" fill="#1877f2"/><path fill="#fff" d="M15.5 8H14c-.6 0-1 .4-1 1v1.5h2.5l-.4 2.5H13V21h-2.6v-8H8.5v-2.5h1.9V8.7C10.4 6.9 11.5 6 13.2 6h2.3z"/>',
+  Instagram: '<defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".3" stop-color="#fa7e1e"/><stop offset=".6" stop-color="#d62976"/><stop offset=".8" stop-color="#962fbf"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="5" fill="url(#ig)"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16.8" cy="7.2" r="1.2" fill="#fff"/>',
+  TikTok: TT + ' fill="#25f4ee" transform="translate(-1 -1)"/>' + TT + ' fill="#fe2c55" transform="translate(1 1)"/>' + TT + ' fill="#010101"/>',
+  Yelp: '<circle cx="12" cy="12" r="10" fill="#d32323"/><path fill="#fff" d="M12 5.5l1.9 3.9 4.3.6-3.1 3 .7 4.3-3.8-2-3.8 2 .7-4.3-3.1-3 4.3-.6z"/>',
+  'Other social links': '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18" stroke="currentColor" stroke-width="2"/>',
+};
+// a box line: label left, input right. Returns the input.
+function row(card, label, ex, type) {
+  const l = document.createElement('label'); l.className = 'field'; const sp = document.createElement('span'); sp.textContent = label;
+  if (ICONS[label]) sp.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ICONS[label]}</svg>`);
+  const wrap = document.createElement('div'); const t = document.createElement('input'); t.type = type || 'text';
+  wrap.append(t); l.append(sp, wrap); card.append(l); return t;
+}
 fetch('create-form.gs').then(r => r.text()).then(src => {
   const unq = s => s.trim().replace(/^'|'$/g, '').replace(/\\n/g, '\n');
   document.getElementById('title').textContent = unq(src.match(/FormApp\.create\(('[^']*')/)[1]);
   document.getElementById('desc').textContent = [...src.match(/setDescription\(([\s\S]*?)\)\n/)[1].matchAll(/'([^']*)'/g)].map(m => unq(m[1])).join('');
-  const desc = document.getElementById('desc'); // text first (escaped), then turn email/phone into links
-  desc.innerHTML = desc.innerHTML
-    .replace(/[\w.]+@[\w.]+\w/g, e => `<a href="mailto:${e}">${e}</a>`)
-    .replace(/\d{3}\.\d{3}\.\d{4}/g, p => `<a href="tel:+1${p.replace(/\./g, '')}">${p}</a>`)
-    .split('\n').map(l => l.startsWith('•') ? `<div class="contact">${l}</div>` : l + '\n').join('').trim();
   const qs = document.getElementById('qs');
-  for (const m of src.matchAll(/^\s*(para|choice)\('([^']*)'(?:,\s*'([^']*)')?(?:,\s*\[([\s\S]*?)\])?\);/gm)) {
-    const card = document.createElement('div'); card.className = 'card';
-    const q = document.createElement('div'); q.className = 'q'; q.textContent = m[2]; card.append(q);
-    if (m[3]) { const ex = document.createElement('div'); ex.className = 'ex'; ex.textContent = m[3]; card.append(ex); }
-    if (m[1] === 'para') { const t = document.createElement('textarea'); t.required = true; card.append(t); }
-    else for (const [, opt] of m[4].matchAll(/'([^']*)'/g)) {
-      const l = document.createElement('label'); const r = document.createElement('input');
-      r.type = 'radio'; r.name = m[2]; r.value = opt; r.required = true; l.append(r, ' ' + opt); card.append(l);
+  let i = 0; // question order = entry order in the Google Form
+  let into = null; // group box that later questions go inside (until the next section/group)
+  for (const m of src.matchAll(/^\s*(section|heading|group|field|link|ifYes|lines|note|explain|para|text|box|upload|choice|checks)\('([^']*)'(?:,\s*'([^']*)')?(?:,\s*\[([\s\S]*?)\])?(?:,\s*(\d+))?\);/gm)) {
+    // box: one optional tick box under the question above, no card of its own
+    if (m[1] === 'box') { const l = document.createElement('label'); const b = document.createElement('input'); b.type = 'checkbox'; b.value = m[3]; b.dataset.i = i++; l.append(b, m[3]); qs.lastChild.append(l); continue; }
+    // upload: file box under the question above. Not a Google Form question, so no entry number (i)
+    if (m[1] === 'upload') { const l = document.createElement('label'); const f = document.createElement('input'); f.type = 'file'; f.multiple = true; f.accept = 'image/*,.pdf'; l.append(m[2], f); l.className = 'upload'; qs.lastChild.append(l); if (m[3]) { const ex = document.createElement('div'); ex.className = 'ex note'; ex.textContent = m[3]; ex.innerHTML = ex.innerHTML.replace('DIYSEO.support@gmail.com', '<a href="mailto:DIYSEO.support@gmail.com">DIYSEO.support@gmail.com</a>'); qs.lastChild.append(ex); } continue; }
+    // field / link / ifYes: a line inside the box above (field required, link optional, ifYes shown only after Yes)
+    if (m[1] === 'field' || m[1] === 'link' || m[1] === 'ifYes') {
+      const card = qs.lastChild, t = row(card, m[2], m[3]); t.dataset.i = i++;
+      t.required = m[1] === 'field'; t.parentNode.parentNode.classList.toggle('req', t.required);
+      if (m[2] === 'Phone') livelink(t, 'tel'); else if (m[1] !== 'field') livelink(t, 'url');
+      if (m[1] === 'ifYes') {
+        const l = t.parentNode.parentNode; l.hidden = true;
+        card.addEventListener('change', () => { const yes = card.querySelector('[value=Yes]').checked; l.hidden = !yes; t.required = yes; l.classList.toggle('req', yes); if (!yes) { t.value = ''; t.dispatchEvent(new Event('input')); } });
+      }
+      continue;
     }
-    qs.append(card);
+    // explain: under each option ticked in the question above, a write-in space + upload; joined into one answer
+    if (m[1] === 'explain') {
+      const prev = (into || qs).lastChild, all = document.createElement('textarea'); all.hidden = true; all.dataset.i = i++;
+      const ex = document.createElement('div'); ex.className = 'ex note'; ex.textContent = m[2] + ' ' + (m[3] || ''); prev.append(all, ex);
+      prev.querySelectorAll('.opts input[type=checkbox]').forEach(box => {
+        const d = document.createElement('div'); d.className = 'explain'; d.hidden = true; d.dataset.name = box.value;
+        const name = document.createElement('strong'); name.textContent = box.value;
+        const t = document.createElement('textarea'); t.rows = 3; t.placeholder = 'What should it show or say?';
+        const f = document.createElement('input'); f.type = 'file'; f.multiple = true; f.accept = 'image/*,.pdf';
+        d.append(name, t, f); prev.append(d);
+        box.addEventListener('change', () => { d.hidden = !box.checked; t.required = box.checked; });
+      });
+      const join = () => all.value = [...prev.querySelectorAll('.explain:not([hidden])')].map(d => d.dataset.name + ': ' + d.querySelector('textarea').value.trim()).join('\n\n');
+      prev.addEventListener('input', join); prev.addEventListener('change', join);
+      continue;
+    }
+    const head = m[1] === 'section' || m[1] === 'heading' || m[1] === 'group';
+    const sub = into && !head;
+    const card = document.createElement('div'); card.className = sub ? 'sub' : 'card';
+    const q = document.createElement('div'); q.className = m[1] === 'heading' ? 'q section heading' : head ? 'q section' + (m[1] === 'section' ? ' req' : '') : sub ? 'q sub' : 'q'; q.textContent = m[2]; card.append(q);
+    if (head) { into = m[1] === 'group' ? card : null; qs.append(card); continue; } // a header, not a question: no entry number
+    if (m[3]) { const ex = document.createElement('div'); ex.className = 'ex'; ex.textContent = m[3]; ex.innerHTML = ex.innerHTML.replace(/https?:\/\/[^\s,]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`); card.append(ex); } // web addresses in examples are clickable
+    // lines: write-in lines (5 unless a count is given); a hidden box (the real answer) gets them joined, one per line
+    if (m[1] === 'lines') {
+      const t = document.createElement('textarea'); t.hidden = true; t.dataset.i = i; card.append(t);
+      for (let k = 0; k < (+m[5] || 5); k++) { const l = document.createElement('input'); l.type = 'text'; l.className = 'line'; l.required = k === 0; card.append(l); }
+      card.addEventListener('input', () => t.value = [...card.querySelectorAll('.line')].map(l => l.value.trim()).filter(Boolean).join('\n'));
+    }
+    else if (m[1] === 'note') { const t = document.createElement('textarea'); t.dataset.i = i; card.append(t); q.classList.add('optional'); }
+    else if (m[1] === 'para') { const t = document.createElement('textarea'); t.required = true; t.dataset.i = i; card.append(t); }
+    else if (m[1] !== 'choice' && m[1] !== 'checks') { const t = document.createElement('input'); t.type = 'text'; t.required = m[1] === 'text'; t.dataset.i = i; card.append(t); }
+    else {
+      const opts = document.createElement('div'); opts.className = m[4].match(/'[^']*'/g).length < 5 ? 'opts list' : 'opts'; opts.dataset.req = ''; card.append(opts);
+      for (const [, opt] of m[4].matchAll(/'([^']*)'/g)) {
+        const l = document.createElement('label'); const r = document.createElement('input');
+        r.type = m[1] === 'checks' ? 'checkbox' : 'radio'; r.name = m[2]; r.value = opt; r.required = r.type === 'radio'; r.dataset.i = i; l.append(r, opt); opts.append(l);
+        // write-in box: typing in it ticks Other, and it's required while Other is ticked
+        if (opt === 'Other') { const t = document.createElement('input'); t.type = 'text'; t.className = 'other'; l.append(':', t); t.addEventListener('focus', () => { if (!r.disabled && !r.checked) r.click(); }); }
+      }
+      opts.addEventListener('change', () => { const t = opts.querySelector('.other'); if (t) t.required = t.parentNode.firstChild.checked; });
+      // "Pick up to N." in the title: once N are ticked, the rest switch off until one is unticked
+      const max = m[1] === 'checks' && m[2].match(/Pick up to (\d+)/);
+      if (max) opts.addEventListener('change', () => {
+        const full = opts.querySelectorAll(':checked').length >= +max[1];
+        opts.querySelectorAll('[type=checkbox]:not(:checked)').forEach(x => x.disabled = full);
+      });
+    }
+    (sub ? into : qs).append(card); i++;
   }
+  // email (collected by Google, not a question) is a line right after Phone; then number every card
+  const phone = [...qs.querySelectorAll('.field')].find(l => l.firstChild.textContent === 'Phone');
+  const email = row(phone.parentNode, 'Email', '', 'email');
+  email.name = 'emailAddress'; email.required = true; email.parentNode.parentNode.classList.add('req'); phone.after(email.parentNode.parentNode); livelink(email, 'mailto');
+  // all questions start closed (title only); one opens at a time when you click or tab into it.
+  // Collapsed with max-height (not display:none) so the browser can still jump to a missed required answer.
+  const cards = [...qs.children];
+  // the open card goes in the address (#q3), so a refresh reopens it; no card open = start at the top
+  const open = c => { cards.forEach(x => x.classList.toggle('open', x === c)); history.replaceState(null, '', c ? '#q' + (cards.indexOf(c) + 1) : location.pathname + location.search); };
+  cards.forEach(c => {
+    const body = document.createElement('div'); body.className = 'body';
+    body.append(...[...c.childNodes].slice(1)); c.append(body);
+    c.firstChild.addEventListener('click', () => open(c.classList.contains('open') ? null : c)); // click title again to close
+    c.addEventListener('focusin', () => c.classList.contains('open') || open(c));
+  });
+  history.scrollRestoration = 'manual';
+  const start = cards[+(location.hash.match(/^#q(\d+)$/) || [])[1] - 1];
+  if (start) { open(start); start.scrollIntoView({ block: 'start' }); } else scrollTo(0, 0);
+  // file boxes: picking again adds to the files already chosen (browsers replace them by default); names listed, × removes one
+  qs.querySelectorAll('input[type=file]').forEach(f => {
+    const keep = new DataTransfer(), list = document.createElement('ul'); list.className = 'files'; f.parentNode.after(list);
+    const show = () => { f.files = keep.files; list.replaceChildren(...[...keep.files].map((file, k) => {
+      const li = document.createElement('li'), x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.title = 'Remove';
+      x.onclick = () => { keep.items.remove(k); show(); }; li.append(file.name, x); return li; })); };
+    f.addEventListener('change', () => { const added = [...f.files]; added.forEach(file => [...keep.files].some(o => o.name === file.name && o.size === file.size) || keep.items.add(file)); show(); });
+  });
   thanks = unq(src.match(/setConfirmationMessage\(('[^']*')/)[1]);
 });
 
@@ -90,11 +273,16 @@ const FORM = { action: '', entries: [] };
 let thanks = '';
 document.getElementById('f').addEventListener('submit', e => {
   e.preventDefault();
+  // browsers can't require "at least one" checkbox, so check those groups here
+  const empty = [...document.querySelectorAll('.opts[data-req]')].find(o => !o.querySelector(':checked'));
+  if (empty) { empty.closest('.card').firstChild.click(); empty.scrollIntoView({ block: 'center' }); return alert('Please pick at least one option for: ' + empty.parentNode.querySelector('.q').textContent); }
   if (!FORM.action) return alert('This form is not connected yet. Please call or email us instead.');
   const body = new URLSearchParams({ emailAddress: e.target.emailAddress.value });
-  document.querySelectorAll('#qs .card').forEach((card, i) => {
-    const v = card.querySelector('textarea, input:checked');
-    body.append(FORM.entries[i], v ? v.value : '');
+  document.querySelectorAll('textarea[data-i], input[type=text][data-i], input[data-i]:checked').forEach(v => {
+    const id = FORM.entries[v.dataset.i];
+    if (v.value !== 'Other') return v.value && body.append(id, v.value); // blank optional links are skipped
+    body.append(id, '__other_option__'); // how Google Forms receives a write-in answer
+    body.append(id + '.other_option_response', v.parentNode.querySelector('.other').value);
   });
   // no-cors: Google won't let us read the reply, so we can't confirm it landed. Check the Sheet.
   fetch(FORM.action, { method: 'POST', mode: 'no-cors', body }).then(() => {
@@ -102,6 +290,25 @@ document.getElementById('f').addEventListener('submit', e => {
     scrollTo(0, 0);
   }, () => alert('Could not send. Please check your connection and try again.'));
 });
+
+// footer: spread the name and title so their last letter ends right under the 7 of 941.500.3707
+function alignTo7() {
+  const tel = document.querySelector('.contact-links a[href^="tel:"]');
+  const ls = parseFloat(getComputedStyle(tel).letterSpacing) || 0;
+  const r = document.createRange(); r.selectNodeContents(tel);
+  const end = r.getBoundingClientRect().right - ls;
+  for (const el of document.querySelectorAll('.sig-name, .sig-role')) {
+    el.style.letterSpacing = '0px';
+    r.selectNodeContents(el);
+    const box = r.getBoundingClientRect(), n = el.textContent.length;
+    el.style.letterSpacing = (end - box.right) / (n - 1) + 'px';
+  }
+}
+alignTo7();
+document.fonts.ready.then(alignTo7);
+addEventListener('resize', alignTo7);
+addEventListener('beforeprint', alignTo7);
+addEventListener('afterprint', alignTo7);
 </script>
 </body>
 </html>
