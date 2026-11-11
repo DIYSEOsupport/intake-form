@@ -21,7 +21,7 @@ function createDiyseoForm() {
     // tells you who sent each response, without adding a question. Responder input (not Verified)
     // so the web page at diyseosupport.github.io/intake-form can submit into this form.
     .setEmailCollectionType(FormApp.EmailCollectionType.RESPONDER_INPUT)
-    .setConfirmationMessage('Thanks! We got your answers and will reply within 24 hours.');
+    .setConfirmationMessage('Thanks! We got your answers and will reply within 24 hours. Have more photos? Watch for our email and reply to it with them attached.');
 
   // ex = example shown in small grey text under the question. 
   let n = 0, inGroup = false;
