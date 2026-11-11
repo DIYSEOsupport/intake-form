@@ -7,13 +7,13 @@
 <style>
   :root { --bg:#f6efd9; --surface:#fffaf0; --ink:#1c2d3d; --muted:#536474; --line:#dfd4b9; --blue:#446386; --orange:#dc763a; }
   /* staggered dot texture, like the Gumroad product page, in logo blue #446386 */
-  body { background:radial-gradient(rgba(56,88,115,.16) 1px, transparent 1.5px) 0 0/56px 56px, radial-gradient(rgba(56,88,115,.16) 1px, transparent 1.5px) 28px 28px/56px 56px, var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; margin:0; padding:24px 16px; }
+  body { background:radial-gradient(rgba(68,99,134,.16) 1px, transparent 1.5px) 0 0/56px 56px, radial-gradient(rgba(68,99,134,.16) 1px, transparent 1.5px) 28px 28px/56px 56px, var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; margin:0; padding:24px 16px; }
   main { max-width:680px; margin:0 auto; }
   /* slogan, same as the homepage hero (gumroad/homepage) */
   /* header: logo with the slogan close on its right, centered together; stacked on phones */
   .hero { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px 20px; margin:8px 0 24px; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
   .hero img { width:346px; max-width:100%; border-radius:0; } /* form-header-logo.*: cropped from form-header.*, cream made transparent so the page dots show */
-  .slogan { font-size:clamp(1.9rem,6vw,2.7rem); font-weight:800; letter-spacing:-.035em; line-height:1.1; color:var(--blue); }
+  .slogan { font-size:clamp(1.9rem,6vw,2.7rem); font-weight:800; letter-spacing:-.035em; line-height:1.1; color:var(--ink); } /* "No problem." dark navy, as in slogan.png */
   .slogan .orange { color:var(--orange); } .slogan .blue { color:var(--blue); }
   img { width:100%; border-radius:8px 8px 0 0; display:block; }
   .card { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:20px 24px; margin-bottom:12px; }
@@ -112,7 +112,7 @@
 </head>
 <body>
 <main>
-  <div class="hero"><img class="screen-only" src="form-header-logo.gif?v=11" alt="DIYSEO"><img class="print-only" src="form-header-logo.png?v=11" alt="DIYSEO">
+  <div class="hero"><img class="screen-only" src="form-header-logo.webp?v=12" alt="DIYSEO"><img class="print-only" src="form-header-logo.png?v=12" alt="DIYSEO">
     <div class="slogan"><span class="orange">No budget.</span><br><span class="blue">No tech skills.</span><br>No problem.</div></div>
   <div class="card intro"><h1 id="title"></h1><div class="desc" id="desc"></div></div>
   <form id="f">
@@ -124,7 +124,7 @@
       <div class="sig-role">Owner / Operator · DIYSEO</div>
       <dl><dt>Call/Text</dt><dd><a href="tel:+19415003707">941.500.3707</a></dd><dt>Email</dt><dd><a href="mailto:DIYSEO.support@gmail.com">DIYSEO.support@gmail.com</a></dd></dl>
     </div>
-    <div><img class="screen-only" src="logo-small.gif?v=11" alt="DIYSEO"><img class="print-only" src="logo-small.png?v=11" alt="DIYSEO"></div>
+    <div><img class="screen-only" src="logo-small.webp?v=12" alt="DIYSEO"><img class="print-only" src="logo-small.png?v=12" alt="DIYSEO"></div>
   </div>
   <button>Submit</button>
   </form>
