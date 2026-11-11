@@ -21,7 +21,7 @@ function createDiyseoForm() {
     // tells you who sent each response, without adding a question. Responder input (not Verified)
     // so the web page at diyseosupport.github.io/intake-form can submit into this form.
     .setEmailCollectionType(FormApp.EmailCollectionType.RESPONDER_INPUT)
-    .setConfirmationMessage('Thanks! We got your answers and will reply within 24 hours. Have more photos? Watch for our email and reply to it with them attached.');
+    .setConfirmationMessage('Thanks! We got your answers and will reply within 24 hours.');
 
   // ex = example shown in small grey text under the question. 
   let n = 0, inGroup = false;
@@ -196,23 +196,4 @@ function createDiyseoForm() {
   Logger.log('Edit form:  ' + form.getEditUrl());
   Logger.log('Share link: ' + form.getPublishedUrl());
   Logger.log('Responses:  ' + sheet.getUrl());
-
-  // emails each person a thank-you with a "send more photos" ask, every time the form is submitted
-  ScriptApp.newTrigger('sendConfirmation').forForm(form).onFormSubmit().create();
-}
-
-// Runs on each submission (trigger above). Sent from the account that ran the script.
-function sendConfirmation(e) {
-  const to = e.response.getRespondentEmail();
-  if (!to) return;
-  MailApp.sendEmail({
-    to: to,
-    subject: 'We got your website intake form',
-    body: 'Thanks! We got your answers and will reply within 24 hours.\n\n' +
-      'HAVE MORE PHOTOS? Reply to this email with them attached.\n' +
-      'Storefront, inside, products, your team, happy customers: the more the better.\n' +
-      'Clear, bright, in-focus photos work best. Phone photos are fine: take them in daylight, hold steady, ' +
-      'no filters, and send the full-size file (not a screenshot).\n\n' +
-      'Diana M. Leff, owner/operator\nDIYSEO\nCall/Text: 941.500.3707\nDIYSEO.support@gmail.com',
-  });
 }
